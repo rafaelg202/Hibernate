@@ -32,8 +32,7 @@ public class TesteJPA {
 		/**
 		 * Usando MySQL
 		 */
-		EntityManagerFactory emf = Persistence
-				.createEntityManagerFactory("contas-mysql");
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("financas-mysql");
 
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
