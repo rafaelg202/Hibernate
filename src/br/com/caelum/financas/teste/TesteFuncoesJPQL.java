@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import br.com.caelum.financas.modelo.Conta;
 import br.com.caelum.financas.modelo.Movimentacao;
@@ -22,10 +23,10 @@ public class TesteFuncoesJPQL {
 		Conta conta = new Conta();
 		conta.setId(2);
 		
-		String jpql = "SELECT COUNT(m.valor) FROM Movimentacao m WHERE m.conta = :pConta" + // SUM(m.valor) retorna BigDecimal || AVG(m.valor) retorna Double
-				" AND m.tipo = :pTipo " +	
-				" ORDER BY m.valor desc";
-		Query query = em.createQuery(jpql);
+		String jpql = "SELECT distinct AVG(m.valor) FROM Movimentacao m WHERE m.conta = :pConta" + // SUM(m.valor) retorna BigDecimal || AVG(m.valor) retorna Double
+				" AND m.tipo = :pTipo " +
+				" GROUP BY  m.data " ;
+		TypedQuery<Double> query = em.createQuery(jpql, Double.class);
 		query.setParameter("pConta", conta);
 		query.setParameter("pTipo", TipoMovimentacao.SAIDA);
 		
@@ -35,8 +36,14 @@ public class TesteFuncoesJPQL {
 //		Double media = (Double) query.getSingleResult();
 //		System.out.println("Media: " + media);
 		
-		Long quantidade = (Long) query.getSingleResult();
-		System.out.println("Total de Movimentacoes: " + quantidade);
+		List <Double> medias = query.getResultList();
+		
+		for (Double media : medias) {
+			System.out.println("Media do dia : " + medias.get(0));
+		}
+		
+//		Long quantidade = (Long) query.getSingleResult();
+//		System.out.println("Total de Movimentacoes: " + quantidade);
 		
 		em.getTransaction().commit();
 		em.close();

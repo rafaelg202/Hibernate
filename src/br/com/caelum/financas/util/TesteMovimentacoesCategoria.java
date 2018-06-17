@@ -20,13 +20,13 @@ public class TesteMovimentacoesCategoria {
 		Categoria categoria2 = new Categoria("Negocios");
 		
 		Conta conta = new Conta();
-		conta.setId(1);
+		conta.setId(2);
 		
 		Movimentacao mvt1 = new Movimentacao();
 		mvt1.setData(Calendar.getInstance());
 		mvt1.setDescricao("Viagem à SP");
 		mvt1.setTipo(TipoMovimentacao.SAIDA);
-		mvt1.setValor(new BigDecimal("1100.0"));
+		mvt1.setValor(new BigDecimal("1300.0"));
 		mvt1.setCategoria(Arrays.asList(categoria1,categoria2));
 		
 		mvt1.setConta(conta);
@@ -39,7 +39,7 @@ public class TesteMovimentacoesCategoria {
 		mvt2.setData(amanha);
 		mvt2.setDescricao("Viagem à RJ");
 		mvt2.setTipo(TipoMovimentacao.SAIDA);
-		mvt2.setValor(new BigDecimal("400.0"));
+		mvt2.setValor(new BigDecimal("500.0"));
 		mvt2.setCategoria(Arrays.asList(categoria1,categoria2));
 		
 		mvt2.setConta(conta);
