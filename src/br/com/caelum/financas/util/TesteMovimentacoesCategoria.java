@@ -1,4 +1,4 @@
-package br.com.caelum.financas.teste;
+package br.com.caelum.financas.util;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -10,7 +10,6 @@ import br.com.caelum.financas.modelo.Categoria;
 import br.com.caelum.financas.modelo.Conta;
 import br.com.caelum.financas.modelo.Movimentacao;
 import br.com.caelum.financas.modelo.TipoMovimentacao;
-import br.com.caelum.financas.util.JPAUtil;
 
 public class TesteMovimentacoesCategoria {
 
@@ -21,22 +20,26 @@ public class TesteMovimentacoesCategoria {
 		Categoria categoria2 = new Categoria("Negocios");
 		
 		Conta conta = new Conta();
-		conta.setId(2);
+		conta.setId(1);
 		
 		Movimentacao mvt1 = new Movimentacao();
 		mvt1.setData(Calendar.getInstance());
 		mvt1.setDescricao("Viagem à SP");
 		mvt1.setTipo(TipoMovimentacao.SAIDA);
-		mvt1.setValor(new BigDecimal("100.0"));
+		mvt1.setValor(new BigDecimal("1100.0"));
 		mvt1.setCategoria(Arrays.asList(categoria1,categoria2));
 		
 		mvt1.setConta(conta);
 		
 		Movimentacao mvt2 = new Movimentacao();
-		mvt2.setData(Calendar.getInstance());
+		
+		Calendar amanha = Calendar.getInstance();
+		amanha.add(Calendar.DAY_OF_MONTH, 1);
+		
+		mvt2.setData(amanha);
 		mvt2.setDescricao("Viagem à RJ");
 		mvt2.setTipo(TipoMovimentacao.SAIDA);
-		mvt2.setValor(new BigDecimal("300.0"));
+		mvt2.setValor(new BigDecimal("400.0"));
 		mvt2.setCategoria(Arrays.asList(categoria1,categoria2));
 		
 		mvt2.setConta(conta);
