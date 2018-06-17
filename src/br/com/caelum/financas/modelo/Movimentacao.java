@@ -15,7 +15,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.NamedQuery;
+
 @Entity
+@NamedQuery(query ="SELECT distinct AVG(m.valor) FROM Movimentacao m WHERE m.conta = :pConta" + 
+		" AND m.tipo = :pTipo GROUP BY  m.data ", name="MediasPorDiaETipo")
 public class Movimentacao {
 
 	@Id

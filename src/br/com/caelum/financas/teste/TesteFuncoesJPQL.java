@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import br.com.caelum.financas.dao.MovimentacaoDAO;
 import br.com.caelum.financas.modelo.Conta;
 import br.com.caelum.financas.modelo.Movimentacao;
 import br.com.caelum.financas.modelo.TipoMovimentacao;
@@ -23,24 +24,25 @@ public class TesteFuncoesJPQL {
 		Conta conta = new Conta();
 		conta.setId(2);
 		
-		String jpql = "SELECT distinct AVG(m.valor) FROM Movimentacao m WHERE m.conta = :pConta" + // SUM(m.valor) retorna BigDecimal || AVG(m.valor) retorna Double
-				" AND m.tipo = :pTipo " +
-				" GROUP BY  m.data " ;
-		TypedQuery<Double> query = em.createQuery(jpql, Double.class);
-		query.setParameter("pConta", conta);
-		query.setParameter("pTipo", TipoMovimentacao.SAIDA);
+//		MovimentacaoDAO dao = new MovimentacaoDAO(em); //usado apartir do momento que transforma o modelo em DAO
+//		List<Double> medias = dao .getMediasPorDiaETipo(TipoMovimentacao.SAIDA, conta);
+		
+		
+		TypedQuery<Double> typedQuery = em.createNamedQuery("MediasPorDiaETipo", Double.class);
+		typedQuery.setParameter("pConta", conta);
+		typedQuery.setParameter("pTipo", TipoMovimentacao.SAIDA);
+		
+		List<Double> medias = typedQuery.getResultList();
+		
+		for (Double media : medias) {
+			System.out.println("Media do dia : " + medias.get(0));
+		}
 		
 //		BigDecimal soma = (BigDecimal) query.getSingleResult();
 //		System.out.println("Soma: " + soma);
 //		
 //		Double media = (Double) query.getSingleResult();
 //		System.out.println("Media: " + media);
-		
-		List <Double> medias = query.getResultList();
-		
-		for (Double media : medias) {
-			System.out.println("Media do dia : " + medias.get(0));
-		}
 		
 //		Long quantidade = (Long) query.getSingleResult();
 //		System.out.println("Total de Movimentacoes: " + quantidade);
